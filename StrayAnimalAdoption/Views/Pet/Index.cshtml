@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "上網寵浪系統 - 請選擇入口";
+}
+
+<div class="container mt-5 pt-4">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary mb-3">上網寵浪系統</h1>
+        <p class="text-muted fs-5">歡迎來到系統首頁，請選擇您今天想要使用的服務入口</p>
+    </div>
+
+    <div class="row justify-content-center g-4 mt-2">
+        <div class="col-md-5">
+            <div class="card h-100 shadow border-0 text-center p-4 btn-outline-primary transition-style">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="display-1 my-3 text-success">🏠</div>
+                        <h3 class="card-title fw-bold text-success mb-3">我想領養 / 尋找毛孩</h3>
+                        <p class="card-text text-muted mb-4 fs-6">
+                            登入會員後即可提出領養申請。
+                        </p>
+                    </div>
+                    <a asp-controller="Pet" asp-action="CustomerIndex" class="btn btn-success btn-lg fw-bold py-3 shadow-sm">
+                        進入查詢專區
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card h-100 shadow border-0 text-center p-4 bg-dark text-white">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="display-1 my-3 text-warning">⚙️</div>
+                        <h3 class="card-title fw-bold text-warning mb-3">收容所員工專區</h3>
+                        <p class="card-text text-light-50 mb-4 fs-6" style="opacity: 0.8;">
+                            收容所內部員工專用管理通道。
+                        </p>
+                    </div>
+                    <a asp-controller="Pet" asp-action="EmployeeIndex" class="btn btn-warning btn-lg fw-bold py-3 text-dark shadow-sm">
+                        進入資料管理後台
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* 讓卡片滑過去有微微浮起的特效 */
+    .transition-style {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .transition-style:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+        }
+</style>

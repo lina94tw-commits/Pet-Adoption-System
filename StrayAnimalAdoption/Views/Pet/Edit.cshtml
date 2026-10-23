@@ -1,0 +1,78 @@
+﻿@model StrayAnimalAdoption.Models.Pet
+@{
+    ViewData["Title"] = "修改毛孩資料";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-secondary text-white fw-bold py-3">
+            <h4 class="mb-0">✏️ 修改毛孩檔案資料</h4>
+        </div>
+        <div class="card-body p-4">
+            <form asp-action="Edit" enctype="multipart/form-data" method="post">
+                <input type="hidden" asp-for="Pid" />
+                <input type="hidden" asp-for="Photo" />
+                <input type="hidden" asp-for="IntakeDate" />
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">毛孩名字</label>
+                        <input asp-for="Pname" class="form-control" required />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">動物種類</label>
+                        <input asp-for="Species" class="form-control" required />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">品種</label>
+                        <input asp-for="Breed" class="form-control" />
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-bold">年齡</label>
+                        <input asp-for="Age" class="form-control" />
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-bold">性別</label>
+                        <select asp-for="Gender" class="form-select">
+                            <option value="公">男生 (公)</option>
+                            <option value="母">女生 (母)</option>
+                            <option value="未知">未知</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">領養狀態</label>
+                        <select asp-for="Status" class="form-select">
+                            <option value="待領養">待領養</option>
+                            <option value="已領養">已領養</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">疫苗施打狀態</label>
+                        <select asp-for="VaccineStatus" class="form-select">
+                            <option value="未施打">未施打</option>
+                            <option value="已施打(基礎疫苗)">已施打(基礎疫苗)</option>
+                            <option value="已施打(狂犬病)">已施打(狂犬病)</option>
+                            <option value="已施打(全套)">已施打(全套)</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-12 mb-4">
+                        <label class="form-label fw-bold text-primary">📷 更換毛孩照片 (若不更換請留空)</label>
+                        <input type="file" name="photoFile" class="form-control" accept="image/*" />
+                        @if (!string.IsNullOrEmpty(Model.Photo))
+                        {
+                            <small class="text-muted d-block mt-1">目前照片檔名：@Model.Photo</small>
+                        }
+                    </div>
+                </div>
+                <hr />
+                <div class="d-flex justify-content-between">
+                    <a asp-action="EmployeeIndex" class="btn btn-outline-secondary px-4">取消返回</a>
+                    <button type="submit" class="btn btn-primary fw-bold px-5">💾 儲存變更</button>
+                    <a asp-action="AddHealthRecord" asp-route-petId="@Model.Pid" class="btn btn-outline-info fw-bold">➕ 新增醫療/疫苗紀錄</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

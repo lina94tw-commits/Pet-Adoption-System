@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "員工後台登入";
+}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card shadow border-0">
+                <div class="card-header bg-dark text-warning text-center py-3">
+                    <h4 class="mb-0">⚙️ 收容所員工系統</h4>
+                </div>
+                <div class="card-body p-4 bg-light">
+                    @if (ViewBag.ErrorMessage != null)
+                    {
+                        <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+                    }
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-warning">@TempData["ErrorMessage"]</div>
+                    }
+                    <form asp-action="EmployeeLogin" method="post">
+                        <div class="form-group mb-4">
+                            <label class="form-label fw-bold text-dark">員工專屬編號 (ID)</label>
+                            <input name="employeeId" type="number" class="form-control form-control-lg text-center" required placeholder="請輸入您的員工編號" />
+                        </div>
+                        <button type="submit" class="btn btn-dark w-100 fw-bold py-2 mb-2 text-warning">登入後台管理</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary w-100 py-2">返回主入口</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "顧客會員登入";
+}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow border-0">
+                <div class="card-header bg-success text-white text-center py-3">
+                    <h4 class="mb-0">🏠 顧客會員登入</h4>
+                </div>
+                <div class="card-body p-4">
+                    @if (ViewBag.ErrorMessage != null)
+                    {
+                        <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+                    }
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-warning">@TempData["ErrorMessage"]</div>
+                    }
+                    <form asp-action="CustomerLogin" method="post">
+                        <div class="form-group mb-3">
+                            <label class="form-label fw-bold">電子信箱 (Email)</label>
+                            <input name="email" type="email" class="form-control" required placeholder="請輸入註冊的 Email" />
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="form-label fw-bold">密碼</label>
+                            <input name="password" type="password" class="form-control" required placeholder="請輸入密碼" />
+                        </div>
+                        <button type="submit" class="btn btn-success w-100 fw-bold py-2 mb-3">登入尋找毛孩</button>
+                        <div class="text-center">
+                            <span class="text-muted">第一次來嗎？</span>
+                            <a asp-controller="Members" asp-action="Register" class="fw-bold text-success">立刻註冊</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

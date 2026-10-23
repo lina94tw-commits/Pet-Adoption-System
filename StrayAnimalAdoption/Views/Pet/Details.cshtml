@@ -1,0 +1,104 @@
+﻿@model StrayAnimalAdoption.Models.Pet
+@{
+    ViewData["Title"] = Model.Pname + " 的詳細資料";
+}
+
+<div class="container mt-4">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="row">
+        <div class="col-md-5 mb-4">
+            @if (!string.IsNullOrEmpty(Model.Photo))
+            {
+                <img src="/images/pets/@Model.Photo" class="img-fluid rounded shadow-sm w-100" style="max-height: 400px; object-fit: cover;" alt="照片">
+            }
+            else
+            {
+                <img src="https://via.placeholder.com/400x300?text=No+Image" class="img-fluid rounded shadow-sm w-100" alt="無照片">
+            }
+        </div>
+
+        <div class="col-md-7">
+            <div class="d-flex align-items-center mb-3">
+                <h1 class="fw-bold me-3">@Model.Pname</h1>
+                @if (Model.Status == "待領養")
+                {
+                    <span class="badge bg-success fs-5">待領養</span>
+                }
+                else
+                {
+                    <span class="badge bg-secondary fs-5">已領養</span>
+                }
+            </div>
+            <table class="table table-striped my-4">
+                <tr><th width="30%">種類</th><td>@Model.Species</td></tr>
+                <tr><th>品種</th><td>@Model.Breed</td></tr>
+                <tr><th>性別</th><td>@Model.Gender</td></tr>
+                <tr><th>年齡</th><td>@Model.Age</td></tr>
+                <tr><th>收容日期</th><td>@Model.IntakeDate</td></tr>
+            </table>
+
+            @if (Model.Status == "待領養")
+            {
+                <form asp-action="ApplyAdoption" method="post" class="mt-4">
+                    <input type="hidden" name="petId" value="@Model.Pid" />
+                    <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold">❤️ 線上提出領養申請</button>
+                </form>
+            }
+            else
+            {
+                <button class="btn btn-secondary btn-lg w-100 fw-bold mt-4" disabled>恭喜！本毛孩已被領養</button>
+            }
+        </div>
+    </div>
+
+    <div class="card mt-5 border-0 shadow-sm">
+        <div class="card-header bg-info text-white fw-bold">
+            🛡️ 疫苗與醫療紀錄追蹤
+        </div>
+        <div class="alert alert-info mt-3">
+            目前的疫苗狀態： <strong>@Model.VaccineStatus</strong>
+        </div>
+        <div class="card-body">
+            @if (Model.HealthRecords == null || !Model.HealthRecords.Any())
+            {
+                <p class="text-muted mb-0">目前此毛孩尚無醫療或疫苗施打紀錄。</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>醫療/疫苗項目</th>
+                                <th>施打日期</th>
+                                <th>備註說明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var record in Model.HealthRecords)
+                            {
+                                <tr>
+                                    <td class="fw-bold text-dark">@record.Ttype</td>
+                                    <td>@record.Tdate</td>
+                                    <td>@record.Description</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="mt-4 text-end">
+        @*<a asp-action="Index" class="btn btn-outline-secondary">返回毛孩列表</a>*@
+        <a href="javascript:history.back()" class="btn btn-outline-secondary">返回毛孩列表</a>
+    </div>
+</div>

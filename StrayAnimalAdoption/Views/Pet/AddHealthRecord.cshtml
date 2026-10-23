@@ -1,0 +1,38 @@
+﻿@model StrayAnimalAdoption.Models.HealthRecord
+@{
+    ViewData["Title"] = "新增健康醫療紀錄";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm border-0" style="max-width: 600px; margin: 0 auto;">
+        <div class="card-header bg-info text-white fw-bold py-3">
+            <h5 class="mb-0">📋 為 【@ViewBag.PetName】 新增醫療/疫苗紀錄</h5>
+        </div>
+        <div class="card-body p-4">
+            <form asp-action="AddHealthRecord" method="post">
+                <input type="hidden" name="petId" value="@ViewBag.PetId" />
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">醫療 / 疫苗項目</label>
+                    <input asp-for="Ttype" class="form-control" placeholder="例如：狂犬病疫苗、三合一疫苗、驅蟲、結紮手術" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">施打 / 醫療日期</label>
+                    <input asp-for="Tdate" type="date" class="form-control" required value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">備註說明 (可留空)</label>
+                    <textarea asp-for="Description" class="form-control" rows="3" placeholder="請輸入相關注意事項或醫生囑咐..."></textarea>
+                </div>
+
+                <hr />
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Edit" asp-route-id="@ViewBag.PetId" class="btn btn-outline-secondary">返回修改頁</a>
+                    <button type="submit" class="btn btn-info text-white fw-bold px-4">💾 儲存紀錄</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

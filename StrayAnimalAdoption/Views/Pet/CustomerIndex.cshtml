@@ -1,0 +1,77 @@
+﻿@model IEnumerable<StrayAnimalAdoption.Models.Pet>
+@{
+    ViewData["Title"] = "找尋你的毛孩家人";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-success">🐾 找尋你的毛孩家人 (客戶專區)</h2>
+        <a asp-action="Index" class="btn btn-sm btn-outline-secondary">🔙 返回主入口</a>
+    </div>
+
+    <div class="card mb-4 shadow-sm border-0 bg-light">
+        <div class="card-body">
+            <form asp-action="CustomerIndex" method="get" class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label text-secondary fw-bold">種類</label>
+                    <input type="text" name="searchSpecies" class="form-control" placeholder="例如：貓、狗" value="@ViewBag.SearchSpecies">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label text-secondary fw-bold">性別</label>
+                    <select name="searchGender" class="form-select">
+                        <option value="">全部</option>
+                        <option value="公" selected="@(ViewBag.SearchGender == "公")">男生 (公)</option>
+                        <option value="母" selected="@(ViewBag.SearchGender == "母")">女生 (母)</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label text-secondary fw-bold">領養狀態</label>
+                    <select name="searchStatus" class="form-select">
+                        <option value="">全部</option>
+                        <option value="待領養" selected="@(ViewBag.SearchStatus == "待領養")">待領養</option>
+                        <option value="已領養" selected="@(ViewBag.SearchStatus == "已領養")">已領養</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-success w-100 fw-bold">🔍 開始篩選毛孩</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        @if (!Model.Any())
+        {
+            <div class="col-12 text-center my-5">
+                <h4 class="text-muted">目前沒有符合條件的毛孩 😢</h4>
+            </div>
+        }
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+                    @if (!string.IsNullOrEmpty(item.Photo))
+                    {
+                        <img src="/images/pets/@item.Photo" class="card-img-top" alt="照片" style="height: 220px; object-fit: cover;">
+                    }
+                    else
+                    {
+                        <img src="https://via.placeholder.com/300x200?text=No+Image" class="card-img-top" alt="無照片" style="height: 220px; object-fit: cover;">
+                    }
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h4 class="card-title text-success mb-0">@item.Pname</h4>
+                            <span class="badge @(item.Status == "待領養" ? "bg-success" : "bg-secondary")">@item.Status</span>
+                        </div>
+                        <p class="card-text text-muted mb-1"><strong>品種：</strong>@item.Breed</p>
+                        <p class="card-text text-muted mb-1"><strong>性別：</strong>@item.Gender</p>
+                        <p class="card-text text-muted"><strong>年齡：</strong>@item.Age</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <a asp-action="Details" asp-route-id="@item.Pid" class="btn btn-outline-success w-100">查看詳情 / 申請領養</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

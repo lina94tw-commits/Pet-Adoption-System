@@ -1,0 +1,96 @@
+﻿@model IEnumerable<StrayAnimalAdoption.Models.Pet>
+@{
+    ViewData["Title"] = "收容所管理後台";
+}
+
+<div class="container mt-4">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-warning bg-dark p-2 rounded">🛠️ 收容所毛孩資料管理後台</h2>
+        <div class="d-flex gap-2">
+            <a asp-action="ManageAdoptions" class="btn btn-primary fw-bold text-white">📋 審核領養申請</a>
+            <a asp-action="Create" class="btn btn-warning fw-bold">➕ 新增收容毛孩</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">返回主入口</a>
+        </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm border-0 bg-light">
+        <div class="card-body">
+            <form asp-action="EmployeeIndex" method="get" class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label text-secondary fw-bold">種類</label>
+                    <input type="text" name="searchSpecies" class="form-control" placeholder="全部" value="@ViewBag.SearchSpecies">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label text-secondary fw-bold">性別</label>
+                    <select name="searchGender" class="form-select">
+                        <option value="">全部</option>
+                        <option value="公" selected="@(ViewBag.SearchGender == "公")">男生 (公)</option>
+                        <option value="母" selected="@(ViewBag.SearchGender == "母")">女生 (母)</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label text-secondary fw-bold">領養狀態</label>
+                    <select name="searchStatus" class="form-select">
+                        <option value="">全部</option>
+                        <option value="待領養" selected="@(ViewBag.SearchStatus == "待領養")">待領養</option>
+                        <option value="已領養" selected="@(ViewBag.SearchStatus == "已領養")">已領養</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary w-100 fw-bold">🔍 搜尋資料庫</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        @if (!Model.Any())
+        {
+            <div class="col-12 text-center my-5">
+                <h4 class="text-muted">目前資料庫中沒有符合的資料 📂</h4>
+            </div>
+        }
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="card h-100 shadow-sm border-warning">
+                    @if (!string.IsNullOrEmpty(item.Photo))
+                    {
+                        <img src="/images/pets/@item.Photo" class="card-img-top" alt="照片" style="height: 220px; object-fit: cover;">
+                    }
+                    else
+                    {
+                        <img src="https://via.placeholder.com/300x200?text=No+Image" class="card-img-top" alt="無照片" style="height: 220px; object-fit: cover;">
+                    }
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h4 class="card-title text-dark fw-bold mb-0">@item.Pname</h4>
+                            <span class="badge @(item.Status == "待領養" ? "bg-success" : "bg-secondary")">@item.Status</span>
+                        </div>
+                        <p class="card-text text-muted mb-1"><strong>系統ID (PID)：</strong>@item.Pid</p>
+                        <p class="card-text text-muted mb-1"><strong>品種：</strong>@item.Breed</p>
+                        <p class="card-text text-muted mb-1"><strong>性別：</strong>@item.Gender</p>
+                    </div>
+
+                    <div class="card-footer bg-light border-top-0">
+                        <div class="d-flex gap-2">
+                            <a asp-action="Edit" asp-route-id="@item.Pid" class="btn btn-outline-primary w-100">✏️ 修改資料</a>
+
+                            <form asp-action="Delete" asp-route-id="@item.Pid" method="post" class="w-100" onsubmit="return confirm('警告：確定要刪除 @item.Pname 嗎？');">
+                                <button type="submit" class="btn btn-danger w-100">❌ 刪除</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

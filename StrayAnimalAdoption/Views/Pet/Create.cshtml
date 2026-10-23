@@ -1,0 +1,52 @@
+﻿@model StrayAnimalAdoption.Models.Pet
+@{
+    ViewData["Title"] = "收容所後台 - 新增毛孩";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-warning text-dark fw-bold py-3">
+            <h4 class="mb-0">📋 收容所後台 - 新增毛孩檔案</h4>
+        </div>
+        <div class="card-body p-4">
+            <form asp-action="Create" enctype="multipart/form-data" method="post">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">毛孩名字</label>
+                        <input asp-for="Pname" class="form-control" required placeholder="請填寫名字" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">動物種類</label>
+                        <input asp-for="Species" class="form-control" required placeholder="例如：貓、狗、兔" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">品種</label>
+                        <input asp-for="Breed" class="form-control" placeholder="例如：米克斯、波斯貓" />
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-bold">年齡</label>
+                        <input asp-for="Age" class="form-control" placeholder="例如：3個月、2歲" />
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-bold">性別</label>
+                        <select asp-for="Gender" class="form-select">
+                            <option value="公">男生 (公)</option>
+                            <option value="母">女生 (母)</option>
+                            <option value="未知">未知</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <label class="form-label fw-bold text-primary">📷 上傳毛孩照片</label>
+                        <input type="file" name="photoFile" class="form-control" accept="image/*" />
+                    </div>
+                </div>
+                <hr />
+                <div class="d-flex justify-content-between">
+                    @*<a asp-action="Index" class="btn btn-secondary px-4">取消返回</a>*@
+                    <a href="javascript:history.back()" class="btn btn-secondary">取消返回</a>
+                    <button type="submit" class="btn btn-warning fw-bold px-5">💾 確認儲存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
